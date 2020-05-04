@@ -8,3 +8,8 @@
 !/cluster/.eslintrc.json
 !/cluster/src/*.ts
 !/cluster/test/*.ts
+!/cli/package.json
+!/cli/package-lock.json
+!/cli/tsconfig.json
+!/cli/.eslintrc.json
+!/cli/src/*.ts
