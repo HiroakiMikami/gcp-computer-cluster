@@ -1,0 +1,15 @@
+*
+!*/
+!/.gitignore
+!/LICENSE
+!/cluster/package.json
+!/cluster/package-lock.json
+!/cluster/tsconfig.json
+!/cluster/.eslintrc.json
+!/cluster/src/*.ts
+!/cluster/test/*.ts
+!/cli/package.json
+!/cli/package-lock.json
+!/cli/tsconfig.json
+!/cli/.eslintrc.json
+!/cli/src/*.ts
