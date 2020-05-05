@@ -186,4 +186,52 @@ describe("Cluster", () => {
                 "--account=account", "--project=project", "--zone=zone"]]
         ])
     })
+
+    it("activate a cluster", async () => {
+        const mock = new MockCommand()
+        const cluster = new Cluster({
+            name: "test-cluster",
+            account: "account",
+            project: "project",
+            zone: "zone",
+            useLoggingService: true,
+            useMonitoringService: true,
+            numKubeDnsReplicas: 1,
+            nodePools: {}
+        },
+            async args => mock.gcloud(args),
+            async args => mock.kubectl(args))
+
+        await cluster.activate()
+        mock.args.should.deep.equal([
+            ["gcloud", [
+                "container", "clusters", "resize", "test-cluster", "--node-pool",
+                "default-pool", "--num-nodes", "1", "--quiet",
+                "--account=account", "--project=project", "--zone=zone"]]
+        ])
+    })
+
+    it("deactivate a cluster", async () => {
+        const mock = new MockCommand()
+        const cluster = new Cluster({
+            name: "test-cluster",
+            account: "account",
+            project: "project",
+            zone: "zone",
+            useLoggingService: true,
+            useMonitoringService: true,
+            numKubeDnsReplicas: 1,
+            nodePools: {}
+        },
+            async args => mock.gcloud(args),
+            async args => mock.kubectl(args))
+
+        await cluster.deactivate()
+        mock.args.should.deep.equal([
+            ["gcloud", [
+                "container", "clusters", "resize", "test-cluster", "--node-pool",
+                "default-pool", "--num-nodes", "0", "--quiet",
+                "--account=account", "--project=project", "--zone=zone"]]
+        ])
+    })
 })

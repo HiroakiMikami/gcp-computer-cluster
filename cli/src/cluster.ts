@@ -1,3 +1,5 @@
+const DEFAULT_NODE_POOL_NAME = "default-pool"
+
 export interface Accelerator {
     type: string;
     count: number;
@@ -150,6 +152,26 @@ export class Cluster {
         // Delete cluster
         await this.gcloud([
             "container", "clusters", "delete", this.config.name, "--quiet"]
+            .concat(this.gcloudOptions)
+            .concat(this.clusterOptions))
+        return
+    }
+
+    public async activate(): Promise<void> {
+        // Resize default pool to 1
+        await this.gcloud([
+            "container", "clusters", "resize", this.config.name, "--node-pool",
+            DEFAULT_NODE_POOL_NAME, "--num-nodes", "1", "--quiet"]
+            .concat(this.gcloudOptions)
+            .concat(this.clusterOptions))
+        return
+    }
+
+    public async deactivate(): Promise<void> {
+        // Resize default pool to 0
+        await this.gcloud([
+            "container", "clusters", "resize", this.config.name, "--node-pool",
+            DEFAULT_NODE_POOL_NAME, "--num-nodes", "0", "--quiet"]
             .concat(this.gcloudOptions)
             .concat(this.clusterOptions))
         return

@@ -7,15 +7,28 @@ import * as log4js from "log4js";
 import * as process from "process";
 import * as fs from "fs";
 import { Executable } from "./executable";
-import { ClusterConfig, Cluster } from "./cluster";
-import * as manage from "gcp-computer-cluster-manage";
+import { Cluster } from "./cluster";
 import { promisify } from "util";
+import commander = require("commander");
 
 const logger = log4js.getLogger();
 
-function setLoggerLevel(level: string) {
-  logger.level = level
-  manage.setLoggerLevel(level)
+async function setup(configFile: string, cmd: commander.Command): Promise<Cluster> {
+  logger.level = cmd.parent.logLevel
+  const cfg = await promisify(fs.readFile)(configFile, "utf-8")
+  const gcloud = new Executable(cmd.parent.gcloudPath)
+  const kubectl = new Executable(cmd.parent.kubectlPath)
+  const cluster = new Cluster(
+    JSON.parse(cfg),
+    async (args) => {
+      await gcloud.execute(args)
+      return
+    },
+    async (args) => {
+      await kubectl.execute(args)
+      return
+    })
+    return cluster
 }
 
 async function main(): Promise<void> {
@@ -42,57 +55,25 @@ async function main(): Promise<void> {
     program
       .command("create <config>")
       .action(async (config, cmd) => {
-        const cfg = await promisify(fs.readFile)(config, "utf-8")
-        setLoggerLevel(cmd.parent.logLevel)
-        const gcloud = new Executable(cmd.parent.gcloudPath)
-        const kubectl = new Executable(cmd.parent.kubectlPath)
-        const cluster = new Cluster(
-          JSON.parse(cfg),
-          async (args) => {
-            await gcloud.execute(args)
-            return
-          },
-          async (args) => {
-            await kubectl.execute(args)
-            return
-          })
+        const cluster = await setup(config, cmd)
         await cluster.create()
       });
     program
       .command("delete <config>")
       .action(async (config, cmd) => {
-        setLoggerLevel(cmd.parent.logLevel)
-        const cfg = await promisify(fs.readFile)(config, "utf-8")
-        const gcloud = new Executable(cmd.parent.gcloudPath)
-        const kubectl = new Executable(cmd.parent.kubectlPath)
-        const cluster = new Cluster(
-          JSON.parse(cfg),
-          async (args) => {
-            await gcloud.execute(args)
-            return
-          },
-          async (args) => {
-            await kubectl.execute(args)
-            return
-          })
+        const cluster = await setup(config, cmd)
         await cluster.delete()
       });
       program
       .command("activate <config>")
       .action(async (config, cmd) => {
-        setLoggerLevel(cmd.parent.logLevel)
-        const cfgStr = await promisify(fs.readFile)(config, "utf-8")
-        const cfg: ClusterConfig = JSON.parse(cfgStr)
-        const cluster = new manage.GkeCluster(cfg.name, cfg.zone)
+        const cluster = await setup(config, cmd)
         await cluster.activate()
       });
       program
       .command("deactivate <config>")
       .action(async (config, cmd) => {
-        setLoggerLevel(cmd.parent.logLevel)
-        const cfgStr = await promisify(fs.readFile)(config, "utf-8")
-        const cfg: ClusterConfig = JSON.parse(cfgStr)
-        const cluster = new manage.GkeCluster(cfg.name, cfg.zone)
+        const cluster = await setup(config, cmd)
         await cluster.deactivate()
       });
     program.parse(process.argv);
