@@ -1,0 +1,33 @@
+{
+  "name": "gcp-computer-cluster-manage",
+  "version": "0.0.0",
+  "description": "",
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
+  "scripts": {
+    "compile": "$(npm bin)/tsc -d -p ./",
+    "doc": "$(npm bin)/typedoc --out doc ./src/",
+    "check-format": "$(npm bin)/eslint $(find ./src -name '*.ts') $(find ./test -name '*.ts')",
+    "lint": "$(npm bin)/eslint --fix $(find ./src -name '*.ts') $(find ./test -name '*.ts')",
+    "watch": "$(npm bin)/tsc -w -d -p ./",
+    "test": "$(npm bin)/mocha $(find ./out/test -name '*.js')"
+  },
+  "author": "Hiroaki Mikami",
+  "private": true,
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.4",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "mocha": "^7.1.2",
+    "typedoc": "^0.17.6",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@google-cloud/container": "^1.7.0",
+    "log4js": "^6.2.1"
+  }
+}
