@@ -2,6 +2,8 @@
 !*/
 !/.gitignore
 !/LICENSE
+!/package.json
+!/bin/*.bash
 !/deploy/package.json
 !/deploy/package-lock.json
 !/deploy/tsconfig.json

@@ -10,7 +10,8 @@
     "doc": "$(npm bin)/typedoc --out doc ./src/",
     "check-format": "$(npm bin)/eslint $(find ./src -name '*.ts')",
     "lint": "$(npm bin)/eslint --fix $(find ./src -name '*.ts')",
-    "watch": "$(npm bin)/tsc -w -p ./"
+    "watch": "$(npm bin)/tsc -w -p ./",
+    "test": "echo There are no tests in cli subpackage"
   },
   "author": "Hiroaki Mikami",
   "private": true,
