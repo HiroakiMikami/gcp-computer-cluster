@@ -14,7 +14,7 @@ export interface ClusterConfig {
     name: string;
     account?: string;
     project?: string;
-    zone?: string;
+    zone: string;
     useLoggingService?: boolean;
     useMonitoringService?: boolean;
     numKubeDnsReplicas?: number;
@@ -24,7 +24,7 @@ interface FixedClusterConfig {
     name: string;
     account?: string;
     project?: string;
-    zone?: string;
+    zone: string;
     useLoggingService: boolean;
     useMonitoringService: boolean;
     numKubeDnsReplicas: number;
@@ -62,10 +62,7 @@ export class Cluster {
         if (this.config.project) {
             this.gcloudOptions.push(`--project=${this.config.project}`)
         }
-        this.clusterOptions = []
-        if (this.config.zone) {
-            this.clusterOptions.push(`--zone=${this.config.zone}`)
-        }
+        this.clusterOptions = [`--zone=${this.config.zone}`]
     }
 
     public async create(): Promise<void> {

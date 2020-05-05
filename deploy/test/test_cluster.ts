@@ -60,6 +60,7 @@ describe("Cluster", () => {
         const mock = new MockCommand()
         const cluster = new Cluster({
             name: "test-cluster",
+            zone: "zone",
             nodePools: {}
         },
             async args => mock.gcloud(args),
@@ -69,18 +70,18 @@ describe("Cluster", () => {
         mock.args.should.deep.equal([
             ["gcloud", [
                 "beta", "container", "clusters", "create", "test-cluster", "--num-nodes", "1",
-                "--addons=GcePersistentDiskCsiDriver"]],
+                "--addons=GcePersistentDiskCsiDriver", "--zone=zone"]],
             ["gcloud", [
                 "beta", "container", "clusters", "update", "test-cluster",
-                "--autoscaling-profile", "optimize-utilization"]],
+                "--autoscaling-profile", "optimize-utilization", "--zone=zone"]],
             ["gcloud", [
                 "container", "clusters", "update", "test-cluster",
-                "--update-addons=HorizontalPodAutoscaling=DISABLED"]],
+                "--update-addons=HorizontalPodAutoscaling=DISABLED", "--zone=zone"]],
             ["gcloud", [
                 "beta", "container", "clusters", "update", "test-cluster",
-                "--logging-service", "none", "--monitoring-service", "none"]],
+                "--logging-service", "none", "--monitoring-service", "none", "--zone=zone"]],
             ["gcloud", [
-                "container", "clusters", "get-credentials", "test-cluster"]],
+                "container", "clusters", "get-credentials", "test-cluster", "--zone=zone"]],
             ["kubectl", ["scale", "--replicas=0", "deployment/kube-dns-autoscaler", "--namespace=kube-system"]],
             ["kubectl", ["apply", "-f",
                 "https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml"]]
@@ -91,6 +92,7 @@ describe("Cluster", () => {
         const mock = new MockCommand()
         const cluster = new Cluster({
             name: "test-cluster",
+            zone: "zone",
             nodePools: {}
         },
             async args => mock.gcloud(args),
@@ -100,18 +102,18 @@ describe("Cluster", () => {
         mock.args.should.deep.equal([
             ["gcloud", [
                 "beta", "container", "clusters", "create", "test-cluster", "--num-nodes", "1",
-                "--addons=GcePersistentDiskCsiDriver"]],
+                "--addons=GcePersistentDiskCsiDriver", "--zone=zone"]],
             ["gcloud", [
                 "beta", "container", "clusters", "update", "test-cluster",
-                "--autoscaling-profile", "optimize-utilization"]],
+                "--autoscaling-profile", "optimize-utilization", "--zone=zone"]],
             ["gcloud", [
                 "container", "clusters", "update", "test-cluster",
-                "--update-addons=HorizontalPodAutoscaling=DISABLED"]],
+                "--update-addons=HorizontalPodAutoscaling=DISABLED", "--zone=zone"]],
             ["gcloud", [
                 "beta", "container", "clusters", "update", "test-cluster",
-                "--logging-service", "none", "--monitoring-service", "none"]],
+                "--logging-service", "none", "--monitoring-service", "none", "--zone=zone"]],
             ["gcloud", [
-                "container", "clusters", "get-credentials", "test-cluster"]],
+                "container", "clusters", "get-credentials", "test-cluster", "--zone=zone"]],
             ["kubectl", ["scale", "--replicas=0", "deployment/kube-dns-autoscaler", "--namespace=kube-system"]],
             ["kubectl", ["apply", "-f",
                 "https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml"]]
@@ -120,6 +122,7 @@ describe("Cluster", () => {
             const mock = new MockCommand()
             const cluster = new Cluster({
                 name: "test-cluster",
+                zone: "zone",
                 useLoggingService: true, useMonitoringService: true,
                 nodePools: {
                     "cpu": {machineType: "type", numMaxNodes: 1, accelerators: [], preemptible: false},
@@ -134,24 +137,26 @@ describe("Cluster", () => {
             mock.args.should.deep.equal([
                 ["gcloud", [
                     "beta", "container", "clusters", "create", "test-cluster", "--num-nodes", "1",
-                    "--addons=GcePersistentDiskCsiDriver"]],
+                    "--addons=GcePersistentDiskCsiDriver", "--zone=zone"]],
                 ["gcloud", [
                     "container", "node-pools", "create", "cpu", "--cluster=test-cluster",
                     "--enable-autoscaling", "--max-nodes=1", "--min-nodes", "0", "--num-nodes", "0",
-                    "--machine-type", "type", "--node-taints=gcp-computer-cluster.preemptible=false:NoSchedule"]],
+                    "--machine-type", "type", "--node-taints=gcp-computer-cluster.preemptible=false:NoSchedule",
+                    "--zone=zone"]],
                 ["gcloud", [
                     "container", "node-pools", "create", "cpu", "--cluster=test-cluster",
                     "--enable-autoscaling", "--max-nodes=1", "--min-nodes", "0", "--num-nodes", "0",
                     "--machine-type", "type", "--node-taints=gcp-computer-cluster.preemptible=true:NoSchedule",
-                    "--preemptible", "--accelerator", "type=gpu,count=1"]],
+                    "--preemptible", "--accelerator", "type=gpu,count=1",
+                    "--zone=zone"]],
                 ["gcloud", [
                     "beta", "container", "clusters", "update", "test-cluster",
-                    "--autoscaling-profile", "optimize-utilization"]],
+                    "--autoscaling-profile", "optimize-utilization", "--zone=zone"]],
                 ["gcloud", [
                     "container", "clusters", "update", "test-cluster",
-                    "--update-addons=HorizontalPodAutoscaling=DISABLED"]],
+                    "--update-addons=HorizontalPodAutoscaling=DISABLED", "--zone=zone"]],
                 ["gcloud", [
-                    "container", "clusters", "get-credentials", "test-cluster"]],
+                    "container", "clusters", "get-credentials", "test-cluster", "--zone=zone"]],
                 ["kubectl", ["scale", "--replicas=0", "deployment/kube-dns-autoscaler", "--namespace=kube-system"]],
                 ["kubectl", ["apply", "-f",
                     "https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml"]]
