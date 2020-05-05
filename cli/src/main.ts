@@ -6,7 +6,7 @@ import * as program from "commander";
 import * as log4js from "log4js";
 import * as process from "process";
 import * as fs from "fs";
-import { Cluster, Executable, setLoggerLevel } from "gcp-computer-cluster-cluster";
+import { Cluster, Executable, setLoggerLevel } from "gcp-computer-cluster-deploy";
 import { promisify } from "util";
 
 const logger = log4js.getLogger();

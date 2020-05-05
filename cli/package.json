@@ -29,6 +29,6 @@
   "dependencies": {
     "commander": "^5.1.0",
     "log4js": "^6.2.1",
-    "gcp-computer-cluster-cluster": "file:../cluster"
+    "gcp-computer-cluster-deploy": "file:../deploy"
   }
 }
