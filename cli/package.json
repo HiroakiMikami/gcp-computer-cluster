@@ -11,7 +11,7 @@
     "check-format": "$(npm bin)/eslint $(find ./src -name '*.ts')",
     "lint": "$(npm bin)/eslint --fix $(find ./src -name '*.ts')",
     "watch": "$(npm bin)/tsc -w -p ./",
-    "test": "echo There are no tests in cli subpackage"
+    "test": "$(npm bin)/mocha $(find ./out/test -name '*.js')"
   },
   "author": "Hiroaki Mikami",
   "private": true,
@@ -29,8 +29,6 @@
   },
   "dependencies": {
     "commander": "^5.1.0",
-    "log4js": "^6.2.1",
-    "gcp-computer-cluster-deploy": "file:../deploy",
-    "gcp-computer-cluster-manage": "file:../manage"
+    "log4js": "^6.2.1"
   }
 }

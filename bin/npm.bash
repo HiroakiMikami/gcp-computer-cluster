@@ -3,7 +3,7 @@ set -u
 
 command=$1
 
-for dir in deploy manage cli
+for dir in manage cli
 do
     cd $(realpath $dir)
     npm run $command || exit 1

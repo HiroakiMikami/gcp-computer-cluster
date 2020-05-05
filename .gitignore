@@ -4,12 +4,6 @@
 !/LICENSE
 !/package.json
 !/bin/*.bash
-!/deploy/package.json
-!/deploy/package-lock.json
-!/deploy/tsconfig.json
-!/deploy/.eslintrc.json
-!/deploy/src/*.ts
-!/deploy/test/*.ts
 !/manage/package.json
 !/manage/package-lock.json
 !/manage/tsconfig.json
@@ -21,3 +15,4 @@
 !/cli/tsconfig.json
 !/cli/.eslintrc.json
 !/cli/src/*.ts
+!/cli/test/*.ts
