@@ -3,7 +3,7 @@ set -u
 
 command=$1
 
-for dir in manage cli
+for dir in daemon cli
 do
     cd $(realpath $dir)
     npm run $command || exit 1
