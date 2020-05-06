@@ -4,6 +4,7 @@
 !/LICENSE
 !/package.json
 !/bin/*.bash
+!/daemon/.gcloudignore
 !/daemon/package.json
 !/daemon/package-lock.json
 !/daemon/tsconfig.json
