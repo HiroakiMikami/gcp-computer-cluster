@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@google-cloud/container": "^1.7.0",
-    "@kubernetes/client-node": "^0.11.2"
+    "@kubernetes/client-node": "^0.11.2",
+    "google-auth-library": "^6.0.0"
   }
 }

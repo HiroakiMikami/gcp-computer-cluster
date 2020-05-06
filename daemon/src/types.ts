@@ -1,5 +1,4 @@
 import * as protosTypes from "@google-cloud/container/build/protos/protos"
-
 import { V1PodList, V1NamespaceList } from "@kubernetes/client-node";
 
 export interface ClusterConfig {
@@ -16,6 +15,9 @@ export interface GkeClient {
 export interface KubectlClient {
     listNamespace(): Promise<{body: V1NamespaceList}>;
     listNamespacedPod(namespace: string): Promise<{body: V1PodList}>;
+}
+export interface GoogleAuthClient {
+    getAccessToken(): Promise<string>;
 }
 
 export async function getName(config: ClusterConfig, client: GkeClient): Promise<string> {
