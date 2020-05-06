@@ -1,7 +1,9 @@
-.git/
-.gitignore
-node_modules
-src
-test
-.eslintrc.json
-tsconfig.json
+/.gitignore
+/node_modules
+/src
+/test
+/out/src/*.js.map
+/out/src/*.d.ts
+/out/test
+/.eslintrc.json
+/tsconfig.json

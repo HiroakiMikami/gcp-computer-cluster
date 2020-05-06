@@ -16,7 +16,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-// import * as container from "@google-cloud/container"
 import * as k8s from "@kubernetes/client-node"
 import { ClusterConfig, GkeClient, getName, GoogleAuthClient } from "./types"
 
@@ -28,12 +27,15 @@ export async function createKubernetesClientInGcp(
   }
 
   /* getCluster */
+  console.log(`Get information about the GKE cluster`)
   const cluster = (await gkeClient.getCluster({name: await getName(config, gkeClient)}))[0]
 
   /* getToken */
+  console.log(`Get an access token to access the cluster`)
   const token = await googleAuthClient.getAccessToken()
 
   /* getKubernetesClient */
+  console.log(`Create a kubernetes client`)
   const clusterFullName = `gke_${config.project}_${config.zone}_${config.clusterName}`
   const kubeConfig = {
     apiVersion: "v1",
@@ -60,14 +62,11 @@ export async function createKubernetesClientInGcp(
     users: [
       {
         name: clusterFullName,
-        user: {
-          token: token
-        }
+        user: {token}
       }
     ]
   }
   const kc = new k8s.KubeConfig();
-  console.log(kubeConfig)
   kc.loadFromOptions(kubeConfig);
 
   return kc.makeApiClient(k8s.CoreV1Api)
