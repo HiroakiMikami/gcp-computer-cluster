@@ -21,12 +21,34 @@ class MockClient {
 describe("GkeCluster", () => {
     it("activate the cluster", async () => {
         const client = new MockClient("project")
-        const cluster = new GkeCluster("cluster", "zone", null, client);
+        const cluster = new GkeCluster({clusterName: "cluster", "zone": "zone"}, client);
         await cluster.activate()
         client.args.should.deep.equal([
             {
                 name: "projects/project/zones/zone/clusters/cluster/nodePools/default-pool",
                 nodeCount: 1
+            }
+        ])
+    })
+    it("use project argument to activate", async () => {
+        const client = new MockClient("project")
+        const cluster = new GkeCluster({clusterName: "cluster", "zone": "zone", "project": "pj"}, client);
+        await cluster.activate()
+        client.args.should.deep.equal([
+            {
+                name: "projects/pj/zones/zone/clusters/cluster/nodePools/default-pool",
+                nodeCount: 1
+            }
+        ])
+    })
+    it("deactivate the cluster", async () => {
+        const client = new MockClient("project")
+        const cluster = new GkeCluster({clusterName: "cluster", "zone": "zone"}, client);
+        await cluster.deactivate()
+        client.args.should.deep.equal([
+            {
+                name: "projects/project/zones/zone/clusters/cluster/nodePools/default-pool",
+                nodeCount: 0
             }
         ])
     })
