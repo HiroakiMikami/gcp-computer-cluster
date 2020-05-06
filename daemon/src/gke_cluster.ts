@@ -1,8 +1,6 @@
 import * as container from "@google-cloud/container"
 import * as protosTypes from "@google-cloud/container/build/protos/protos"
-import * as log4js from "log4js"
 
-const logger = log4js.getLogger()
 const DEFAULT_NODE_POOL_NAME = "default-pool"
 
 interface Client {
@@ -26,7 +24,7 @@ export class GkeCluster {
             name: await this.getName(),
             nodeCount: 1
         })
-        logger.debug(`activate API response: ${response}`)
+        console.log(`activate API response: ${response}`)
         return
     }
 
@@ -35,7 +33,7 @@ export class GkeCluster {
             name: await this.getName(),
             nodeCount: 0
         })
-        logger.debug(`deactivate API response: ${response}`)
+        console.log(`deactivate API response: ${response}`)
         return
     }
 }
