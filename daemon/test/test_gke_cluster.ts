@@ -6,16 +6,19 @@ import { GkeCluster } from "../src/gke_cluster"
 import { V1NamespaceList, V1PodList } from "@kubernetes/client-node"
 
 class MockGkeClient {
-    public args: protosTypes.google.container.v1.SetNodePoolSizeRequest[]
+    public args: protosTypes.google.container.v1.ISetNodePoolSizeRequest[]
     constructor(private projectId: string) {
         this.args = []
     }
     async getProjectId(): Promise<string> {
         return this.projectId;
     }
-    async setNodePoolSize(request: protosTypes.google.container.v1.SetNodePoolSizeRequest): Promise<[protosTypes.google.container.v1.IOperation, protosTypes.google.container.v1.ISetNodePoolSizeRequest | undefined, {} | undefined]> {
+    async setNodePoolSize(request: protosTypes.google.container.v1.ISetNodePoolSizeRequest): Promise<[protosTypes.google.container.v1.IOperation, protosTypes.google.container.v1.ISetNodePoolSizeRequest | undefined, {} | undefined]> {
         this.args.push(request)
         return [{}, undefined, undefined]
+    }
+    async getCluster(request: protosTypes.google.container.v1.IGetClusterRequest): Promise<[protosTypes.google.container.v1.ICluster, protosTypes.google.container.v1.IGetClusterRequest | undefined, {} | undefined]> {
+        throw request;
     }
 }
 class MockKubectlClient {
