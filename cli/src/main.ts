@@ -54,15 +54,23 @@ async function main(): Promise<void> {
     // Define command-specific options
     program
       .command("create <config>")
+      .option("--without-shared-components")
       .action(async (config, cmd) => {
         const cluster = await setup(config, cmd)
+        if (!cmd.withoutSharedComponents) {
+          await cluster.createSharedComponents()
+        }
         await cluster.create()
       });
     program
       .command("delete <config>")
+      .option("--without-shared-components")
       .action(async (config, cmd) => {
         const cluster = await setup(config, cmd)
         await cluster.delete()
+        if (!cmd.withoutSharedComponents) {
+          await cluster.deleteSharedComponents()
+        }
       });
       program
       .command("activate <config>")
