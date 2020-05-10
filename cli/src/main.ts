@@ -15,7 +15,6 @@ import commander = require("commander");
 const logger = log4js.getLogger();
 
 async function setup(configFile: string, cmd: commander.Command): Promise<Command> {
-  logger.level = cmd.parent.logLevel
   const cfg = await promisify(fs.readFile)(configFile, "utf-8")
   const gcloud = new Executable(cmd.parent.gcloudPath)
   const kubectl = new Executable(cmd.parent.kubectlPath)
@@ -29,7 +28,7 @@ async function setup(configFile: string, cmd: commander.Command): Promise<Comman
       await kubectl.execute(args)
       return
     })
-    return new Command(cluster)
+    return new Command(cluster, cmd.parent.logLevel)
 }
 
 async function main(): Promise<void> {

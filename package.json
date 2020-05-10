@@ -9,7 +9,8 @@
     "doc": "./bin/npm.bash doc",
     "check-format": "./bin/npm.bash check-format",
     "lint": "./bin/npm.bash lint",
-    "test": "./bin/npm.bash test"
+    "test": "./bin/test.bash",
+    "e2etest": "./bin/e2etest.bash"
   },
   "repository": {
     "type": "git",

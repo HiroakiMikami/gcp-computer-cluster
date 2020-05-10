@@ -17,3 +17,9 @@
 !/cli/.eslintrc.json
 !/cli/src/*.ts
 !/cli/test/*.ts
+!/e2etest/package.json
+!/e2etest/package-lock.json
+!/e2etest/tsconfig.json
+!/e2etest/.eslintrc.json
+!/e2etest/test/*.ts
+!/e2etest/k8sobject/*.yaml

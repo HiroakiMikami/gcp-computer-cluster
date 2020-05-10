@@ -1,7 +1,10 @@
 import { Cluster } from "./cluster";
+import * as log4js from "log4js"
 
 export class Command {
-    constructor(private cluster: Cluster) { }
+    constructor(private cluster: Cluster, loglevel: string) {
+        log4js.getLogger().level = loglevel
+    }
     public async create(withoutSharedComponents = false): Promise<void> {
         if (!withoutSharedComponents) {
             await this.cluster.createSharedComponents()
