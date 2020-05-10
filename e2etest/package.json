@@ -1,0 +1,33 @@
+{
+  "name": "gcp-computer-cluster-e2etest",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "$(npm bin)/tsc -d -p ./",
+    "doc": "$(npm bin)/typedoc --out doc ./src/",
+    "check-format": "$(npm bin)/eslint $(find ./test -name '*.ts')",
+    "lint": "$(npm bin)/eslint --fix $(find ./test -name '*.ts')",
+    "watch": "$(npm bin)/tsc -w -d -p ./",
+    "test": "$(npm bin)/mocha $(find ./out/test -name '*.js') --timeout 1200000"
+  },
+  "author": "Hiroaki Mikami",
+  "private": true,
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.31.0",
+    "chai": "^4.2.0",
+    "eslint": "^7.0.0",
+    "mocha": "^7.1.2",
+    "typedoc": "^0.17.6",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "gcp-computer-cluster-cli": "file:../cli"
+  }
+}

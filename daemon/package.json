@@ -1,5 +1,5 @@
 {
-  "name": "gcp-computer-cluster-cluster",
+  "name": "gcp-computer-cluster-daemon",
   "version": "0.0.0",
   "description": "",
   "main": "out/src/index.js",
@@ -27,6 +27,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "log4js": "^6.2.1"
+    "@google-cloud/container": "^1.7.0",
+    "@kubernetes/client-node": "^0.11.2",
+    "google-auth-library": "^6.0.0"
   }
 }

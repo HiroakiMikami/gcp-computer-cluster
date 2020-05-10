@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "gcp-computer-cluster",
+  "publisher": "HiroakiMikami",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "compile": "./bin/npm.bash compile",
+    "doc": "./bin/npm.bash doc",
+    "check-format": "./bin/npm.bash check-format",
+    "lint": "./bin/npm.bash lint",
+    "test": "./bin/test.bash",
+    "e2etest": "./bin/e2etest.bash"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HiroakiMikami/gcp-computer-cluster.git"
+  },
+  "author": "Hiroaki Mikami",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HiroakiMikami/gcp-computer-cluster/issues"
+  },
+  "homepage": "https://github.com/HiroakiMikami/gcp-computer-scluter#readme"
+}
