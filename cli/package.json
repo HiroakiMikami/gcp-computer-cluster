@@ -5,12 +5,14 @@
   "bin": {
     "cluster": "out/src/main.js"
   },
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
   "scripts": {
-    "compile": "$(npm bin)/tsc -p ./",
+    "compile": "$(npm bin)/tsc -d -p ./",
     "doc": "$(npm bin)/typedoc --out doc ./src/",
     "check-format": "$(npm bin)/eslint $(find ./src -name '*.ts')",
     "lint": "$(npm bin)/eslint --fix $(find ./src -name '*.ts')",
-    "watch": "$(npm bin)/tsc -w -p ./",
+    "watch": "$(npm bin)/tsc -w -d -p ./",
     "test": "$(npm bin)/mocha $(find ./out/test -name '*.js')"
   },
   "author": "Hiroaki Mikami",

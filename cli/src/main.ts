@@ -9,11 +9,12 @@ import * as fs from "fs";
 import { Executable } from "./executable";
 import { Cluster } from "./cluster";
 import { promisify } from "util";
+import { Command } from "./command"
 import commander = require("commander");
 
 const logger = log4js.getLogger();
 
-async function setup(configFile: string, cmd: commander.Command): Promise<Cluster> {
+async function setup(configFile: string, cmd: commander.Command): Promise<Command> {
   logger.level = cmd.parent.logLevel
   const cfg = await promisify(fs.readFile)(configFile, "utf-8")
   const gcloud = new Executable(cmd.parent.gcloudPath)
@@ -28,7 +29,7 @@ async function setup(configFile: string, cmd: commander.Command): Promise<Cluste
       await kubectl.execute(args)
       return
     })
-    return cluster
+    return new Command(cluster)
 }
 
 async function main(): Promise<void> {
@@ -56,33 +57,27 @@ async function main(): Promise<void> {
       .command("create <config>")
       .option("--without-shared-components")
       .action(async (config, cmd) => {
-        const cluster = await setup(config, cmd)
-        if (!cmd.withoutSharedComponents) {
-          await cluster.createSharedComponents()
-        }
-        await cluster.create()
+        const command = await setup(config, cmd)
+        await command.create(cmd.withoutSharedComponents)
       });
     program
       .command("delete <config>")
       .option("--without-shared-components")
       .action(async (config, cmd) => {
-        const cluster = await setup(config, cmd)
-        await cluster.delete()
-        if (!cmd.withoutSharedComponents) {
-          await cluster.deleteSharedComponents()
-        }
+        const command = await setup(config, cmd)
+        await command.delete(cmd.withoutSharedComponents)
       });
       program
       .command("activate <config>")
       .action(async (config, cmd) => {
-        const cluster = await setup(config, cmd)
-        await cluster.activate()
+        const command = await setup(config, cmd)
+        await command.activate()
       });
       program
       .command("deactivate <config>")
       .action(async (config, cmd) => {
-        const cluster = await setup(config, cmd)
-        await cluster.deactivate()
+        const command = await setup(config, cmd)
+        await command.deactivate()
       });
     program.parse(process.argv);
   } catch (error) {
