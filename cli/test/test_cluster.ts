@@ -119,7 +119,7 @@ describe("Cluster", () => {
                     "--schedule", '"0 2 * * *"', "--topic", "gcp-computer-cluster-cluster-deactivation",
                     "--message-body",
                     '\'{"clusterName":"test-cluster","zone":"zone","project":"project"}\'',
-                    "--time-zone", "Asia/Tokyo", "--account=account", "--project=project"]]
+                    "--quiet", "--time-zone", "Asia/Tokyo", "--account=account", "--project=project"]]
             ])
         })
         it("use default values if not set", async () => {
@@ -154,7 +154,7 @@ describe("Cluster", () => {
                 ["gcloud", [
                     "beta", "scheduler", "jobs", "create", "pubsub", "gcp-computer-cluster-autodeactivation-test-cluster",
                     "--schedule", '"0 1 * * *"', "--topic", "gcp-computer-cluster-cluster-deactivation",
-                    "--message-body", '\'{"clusterName":"test-cluster","zone":"zone"}\'']]
+                    "--message-body", '\'{"clusterName":"test-cluster","zone":"zone"}\'', "--quiet"]]
 
             ])
 
@@ -205,7 +205,7 @@ describe("Cluster", () => {
                     ["gcloud", [
                         "beta", "scheduler", "jobs", "create", "pubsub", "gcp-computer-cluster-autodeactivation-test-cluster",
                         "--schedule", '"0 1 * * *"', "--topic", "gcp-computer-cluster-cluster-deactivation",
-                        "--message-body", '\'{"clusterName":"test-cluster","zone":"zone"}\'']]
+                        "--message-body", '\'{"clusterName":"test-cluster","zone":"zone"}\'', "--quiet"]]
                 ])
             })
         })

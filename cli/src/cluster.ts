@@ -176,7 +176,8 @@ export class Cluster {
             `${SHARED_COMPONENTS_PREFIX}autodeactivation-${this.config.name}`,
             "--schedule", '"' + this.config.autoDeactivationSchedule + '"',
             "--topic", this.topicName,
-            "--message-body", "'" + JSON.stringify(messageBody) + "'"]
+            "--message-body", "'" + JSON.stringify(messageBody) + "'",
+            "--quiet"]
             .concat(timeZoneArgs)
             .concat(this.gcloudOptions))
         return
